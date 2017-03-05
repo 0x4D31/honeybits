@@ -1,0 +1,100 @@
+path:
+  bashhistory: /home/test/.bash_history
+  awsconf: /home/test/.aws/config
+  awscred: /home/test/.aws/credentials
+  hosts: /etc/hosts
+
+randomline:
+  bashhistory: true
+  confile: false
+
+honeypot: 
+  addr: 192.168.1.66
+
+
+# Fake files
+honeyfile:
+  enabled: true
+  monitor: auditd # Options: go-audit, auditd, none
+  goaudit-conf: /etc/go-audit.yaml # Only if you use go-audit
+  traps:
+    # Format: - file_path:content_type
+    - /home/test/secret.txt:initial
+    - /opt/secret.txt:credential  
+  
+    
+honeybits:
+
+  # Fake records in config files
+  awsconf:
+    enabled: true
+    profile: devsecops
+    region: us-east-1
+    accesskeyid: AKIAIOSFODNN7EXAMPLE
+    secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+  hostsconf:
+    enabled: true
+    # ip: 192.168.1.66 # Default is 'honeypot addr'
+    name: mysql-srv
+
+  # Fake records in bash_history
+  ssh:
+    enabled: true
+    # server: 192.168.1.66 # Default is 'honeypot.addr'
+    port: 2222
+    user: root
+    sshpass: true
+    pass: 123456
+
+  wget:
+    enabled: true
+    url: http://192.168.1.66:8080/backup.zip
+
+  ftp:
+    enabled: true
+    # server: 192.168.1.66 # Default is 'honeypot.addr'
+    port: 2121
+    user: backup
+    pass: b123
+
+  rsync:
+    enabled: true
+    # server: 192.168.1.66 # Default is 'honeypot.addr'
+    port: 2222
+    user: root
+    remotepath: /var/db/backup.tar.gz
+    localpath: /tmp/backup.tar.gz
+    sshpass: true
+    pass: 12345
+
+  scp:
+    enabled: true
+    # server: 192.168.1.66 # Default is 'honeypot.addr'
+    port: 2222
+    user: root
+    remotepath: /var/db/backup.tar.gz
+    localpath: /tmp/backup.tar.gz
+
+  mysql:
+    enabled: true
+    # server: 192.168.1.66 # Default is 'honeypot.addr'
+    port: 3306
+    user: dbadmin
+    pass: 12345
+    command: show databases
+    # dbname: clients
+
+  aws:
+    enabled: true
+    profile: devops
+    region: us-east-2
+    command: ec2 describe-instance
+    accesskeyid: AKIAIOSFODNN7EXAMPLE
+    secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+# custom honeybits in bash_history
+  custom:
+    - telnet 192.168.1.66 25
+    - nano /tmp/backup/credentials.txt
+
