@@ -89,7 +89,7 @@ honeybits:
     enabled: true
     profile: devops
     region: us-east-2
-    command: ec2 describe-instance
+    command: ec2 describe-instances
     accesskeyid: AKIAIOSFODNN7EXAMPLE
     secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 

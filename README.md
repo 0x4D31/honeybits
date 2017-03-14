@@ -34,14 +34,55 @@ This is a small but crusial component of your deception system which should also
   + any custom commands:
 ```(nano /tmp/backup/credentials.txt)```
   + aws
-```
-export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-aws ec2 describe-instance --profile devops --region us-east-2
+
+
+###Installation:
+Following are the list of prerequisite that you need to fulfill to 
+run the test smoothly.
+(Note: This is tested on ubuntu 16.04)
+* GO_LANG 
+  + Install GO_LANG 
+```$ sudo apt-get install golang-go```
+  + Set the GOPATH
+```$ export GOPATH="/usr/share/go"```
+  + Add Go path in environment
+```$ sudo nano /etc/environment``` and add the GOPATH="/usr/share/go/" at the end.
+  + Update the source
+```$ source /etc/environment```
+  + Install Viper dependency for honeybits
+```$ sudo go get github.com/spf13/viper```
+  + Install crypt dependency
+```$ sudo go get github.com/xordataexchange/crypt/config```
+
+* Audit 
+    + Install the Audit package that will monitor the honeyfile that will be created after the build
+```$ sudo apt-get install auditd audispd-plugins```
+
+* AWS
+    + Install the AWS that will used for AWS honeybits configuration
+```$ sudo apt install awscli```
+
+You are done here with prerequisites the important file you have to play with is *hbconf.yaml*, 
+here you can specify the following things
+* Path where you want to create the honeybits bashhistory file 
+* IP Address of an honeypot where you want to redirect the attacker
+* file which you want to monitor named as *traps* in configurations
+* Fake credentials and configurations for honeybits and honeyfiles
+
+If you want to test with the default configurations you have to create the following directories 
+*/home/test*
+*/home/test/.aws/
+
+    export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+    export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    aws ec2 describe-instance --profile devops --region us-east-2
 ```
 * Insert honeybits into AWS config and credentials file
 * Insert honeybits into /etc/hosts
 * Reading config from a Remote Key/Value Store such as Consul or etcd
+  
+```
+
 
 ###Test:
 ```
@@ -68,6 +109,27 @@ Local config file loaded.
 [done] custom honeybit is inserted
 ```
 
+###Reading the audit results###
+To view the audit rules you have to run use the *auditctl* `$ sudo auditctl -l`
+To view the adversiry activity on the file we want to monitor `$ sudo ausearch -f /opt/secret.txt`
+
+    time->Tue Mar 14 11:07:28 2017
+        type=PROCTITLE msg=audit(1489471648.788:1562): proctitle=6E616E6F002F6F70742F7365637265742E747874
+        type=PATH msg=audit(1489471648.788:1562): item=1 *name="/opt/secret.txt"* inode=22806636 dev=fc:00 mode=0100644 ouid=0 ogid=0 rdev=00:00      nametype=NORMAL
+        type=PATH msg=audit(1489471648.788:1562): item=0 name="/opt/" inode=22806529 dev=fc:00 mode=040755 ouid=0 ogid=0 rdev=00:00 nametype=PARENT
+        type=CWD msg=audit(1489471648.788:1562):  *cwd="/home/waseem/honeybits"*
+        type=SYSCALL msg=audit(1489471648.788:1562): arch=c000003e *syscall=2* success=no exit=-13 a0=18f2f70 a1=441 a2=1b6 a3=7f0751a1ab78 items=2 ppid=2147 pid=18616 *auid=1000* uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts0 ses=1 comm="nano" *exe="/bin/nano"* key="honeyfile"
+ ```
+Some highlights of this output are:
+
+The *time* of the event and the name of the object, the current working path (*cwd*), related *syscall*, audit user ID (*auid*) and the binary (*exe*) performing the action upon the file. Please note that the auid defines the original user during log-in. The other user ID fields might indicate a different user, depending on the effective user being used while triggering an event.
+
+You can use *ausyscall* to understand/converting the System call 
+     
+    $ ausyscall x86_64 2
+    open
+
+```
 ###TODO:
 * Content generator for honeyfiles and file honeybits
   + note: honeyfiles are fake monitored files with random content (doesn't matter), but file honeybits are like connection, config, or backup files that may contain credentials and point the attackers to our honeypots/decoys
