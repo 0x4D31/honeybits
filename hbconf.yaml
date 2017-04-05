@@ -15,61 +15,74 @@ honeypot:
 # Fake files
 honeyfile:
   enabled: true
-  monitor: auditd # Options: go-audit, auditd, none
+  monitor: none # Options: go-audit, auditd, none
   goaudit-conf: /etc/go-audit.yaml # Only if you use go-audit
   traps:
     # Format: - file_path:content_type
-    - /home/test/secret.txt:initial
-    - /opt/secret.txt:credential  
-  
+    # content_type: rdpconn, savedemail, 
+    - /tmp/test.rdp:rdpconn
+    - /tmp/email.txt:txtemail
+
+# Content generator for honeyfiles or file honeybits
+contentgen:
+  rdpconn:
+    user: administrator
+    pass: 12345
+    domain: ecorp-us
+    # server: 192.168.1.66 # Default is 'honeypot addr'
+
+  txtemail:
+    user: dave
+    pass: 12345
+    # server: 192.168.1.66 # Default is 'honeypot addr'
     
 honeybits:
 
   # Fake records in config files
   awsconf:
-    enabled: true
+    enabled: false
     profile: devsecops
     region: us-east-1
     accesskeyid: AKIAIOSFODNN7EXAMPLE
     secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
   hostsconf:
-    enabled: true
+    enabled: false
     # ip: 192.168.1.66 # Default is 'honeypot addr'
     name: mysql-srv
 
   # Fake records in bash_history
   ssh:
-    enabled: true
+    enabled: false
     # server: 192.168.1.66 # Default is 'honeypot.addr'
     port: 2222
     user: root
-    sshpass: true
+    sshpass: false
     pass: 123456
 
   wget:
-    enabled: true
+    enabled: false
     url: http://192.168.1.66:8080/backup.zip
 
   ftp:
-    enabled: true
+    enabled: false
     # server: 192.168.1.66 # Default is 'honeypot.addr'
     port: 2121
     user: backup
     pass: b123
 
   rsync:
-    enabled: true
+    enabled: false
     # server: 192.168.1.66 # Default is 'honeypot.addr'
     port: 2222
     user: root
     remotepath: /var/db/backup.tar.gz
     localpath: /tmp/backup.tar.gz
-    sshpass: true
+    sshpass: false
     pass: 12345
 
   scp:
-    enabled: true
+    enabled: false
     # server: 192.168.1.66 # Default is 'honeypot.addr'
     port: 2222
     user: root
@@ -77,7 +90,7 @@ honeybits:
     localpath: /tmp/backup.tar.gz
 
   mysql:
-    enabled: true
+    enabled: false
     # server: 192.168.1.66 # Default is 'honeypot.addr'
     port: 3306
     user: dbadmin
@@ -86,7 +99,7 @@ honeybits:
     # dbname: clients
 
   aws:
-    enabled: true
+    enabled: false
     profile: devops
     region: us-east-2
     command: ec2 describe-instance

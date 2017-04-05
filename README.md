@@ -16,7 +16,7 @@ This is a small but crusial component of your deception system which should also
 
 ![Honeybits](https://github.com/0x4D31/honeybits/blob/master/docs/honeybits.png)
 
-###Current features:
+### Current features:
 * Creating honeyfiles and monitoring the access to these traps using go-audit or auditd 
 * Insert different honeybits into "bash_history", including the following sample commands:
   + ssh
@@ -37,13 +37,13 @@ This is a small but crusial component of your deception system which should also
 ```
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-aws ec2 describe-instance --profile devops --region us-east-2
+aws ec2 describe-instances --profile devops --region us-east-2
 ```
 * Insert honeybits into AWS config and credentials file
 * Insert honeybits into /etc/hosts
 * Reading config from a Remote Key/Value Store such as Consul or etcd
 
-###Test:
+### Test:
 ```
 $ go build
 $ sudo ./honeybits 
@@ -68,7 +68,7 @@ Local config file loaded.
 [done] custom honeybit is inserted
 ```
 
-###TODO:
+### TODO:
 * Content generator for honeyfiles and file honeybits
   + note: honeyfiles are fake monitored files with random content (doesn't matter), but file honeybits are like connection, config, or backup files that may contain credentials and point the attackers to our honeypots/decoys
 * Add more Credential Traps
