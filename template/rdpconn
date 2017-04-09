@@ -1,0 +1,27 @@
+screen mode id:i:2
+desktopwidth:i:1024
+desktopheight:i:768
+use multimon:i:1
+session bpp:i:24
+full address:s:%s
+compression:i:1
+audiomode:i:2
+username:s:%s
+domain:s:%s
+authentication level:i:0
+clear password:s:%s
+disable wallpaper:i:0
+disable full window drag:i:0
+disable menu anims:i:0
+disable themes:i:0
+alternate shell:s:
+shell working directory:s:
+authentication level:i:2
+connect to console:i:0
+gatewayusagemethod:i:0
+disable cursor setting:i:0
+allow font smoothing:i:1
+allow desktop composition:i:1
+redirectprinters:i:0
+prompt for credentials on client:i:1
+use redirection server name:i:0

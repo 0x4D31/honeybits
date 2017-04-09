@@ -250,22 +250,11 @@ func insertbits(ht string, fp string, hb string, rnd string) {
 	}
 }
 
-func honeyfile_creator(conf *viper.Viper, fp string, ft string) {
+func honeyfile_creator(conf *viper.Viper, fp string, ft string, template string) {
 	if _, err := os.Stat(fp); err == nil {
 		fmt.Printf("[failed] honeyfile already exists at this path: %s\n", fp)
 	} else {
-		data := contentgen.Textgen(conf, ft)
-		/*switch ft {
-		case "test":
-			p := &data
-			*p = fmt.Sprintf(testtext, "adel")	
-		case "initial":
-			p := &data
-			*p = "hello world!"
-		case "credential":
-			p := &data
-			*p = "admin:@123!"
-		} */
+		data := contentgen.Textgen(conf, ft, template)
 		err := ioutil.WriteFile(fp, []byte(data), 0644)
 		if err != nil {
 			fmt.Printf("[failed] Can't create honeyfile, error: \"%s\"\n", err)
@@ -344,7 +333,7 @@ func main() {
 			if traps := conf.GetStringSlice("honeyfile.traps"); len(traps) != 0 {
 				for _, t := range traps {
 					tconf := strings.Split(t, ":")
-					honeyfile_creator(conf, tconf[0], tconf[1])
+					honeyfile_creator(conf, tconf[0], tconf[1], tconf[2])
 					honeyfile_monitor(tconf[0], configfile, "go-audit")
 				}
 			}
@@ -352,7 +341,7 @@ func main() {
 			if traps := conf.GetStringSlice("honeyfile.traps"); len(traps) != 0 {
 				for _, t := range traps {
 					tconf := strings.Split(t, ":")
-					honeyfile_creator(conf, tconf[0], tconf[1])
+					honeyfile_creator(conf, tconf[0], tconf[1], tconf[2])
 					honeyfile_monitor(tconf[0], "", "auditd")
 				}
 			}
@@ -360,7 +349,7 @@ func main() {
 			if traps := conf.GetStringSlice("honeyfile.traps"); len(traps) != 0 {
 				for _, t := range traps {
 					tconf := strings.Split(t, ":")
-					honeyfile_creator(conf, tconf[0], tconf[1])
+					honeyfile_creator(conf, tconf[0], tconf[1], tconf[2])
 				}
 			}
 		default:

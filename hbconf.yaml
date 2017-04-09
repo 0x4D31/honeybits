@@ -18,24 +18,28 @@ honeyfile:
   monitor: none # Options: go-audit, auditd, none
   goaudit-conf: /etc/go-audit.yaml # Only if you use go-audit
   traps:
-    # Format: - file_path:content_type
+    # Format: - file_path:content_type:template
     # content_type: rdpconn, savedemail, 
-    - /tmp/test.rdp:rdpconn
-    - /tmp/email.txt:txtemail
+    # template: config (read from config file: contentgen.xxx.template), template file path (/tmp/sampletemplate.txt)
+    - /tmp/test.rdp:rdpconn:config
+    - /tmp/email.txt:txtemail:template/txtemail
 
 # Content generator for honeyfiles or file honeybits
 contentgen:
   rdpconn:
     user: administrator
     pass: 12345
-    domain: ecorp-us
+    domain: example.com
+    template: "screen mode id:i:2\ndesktopwidth:i:1024\ndesktopheight:i:768\nuse multimon:i:1\nsession bpp:i:24\nfull address:s:%s\ncompression:i:1\naudiomode:i:2\nusername:s:%s\ndomain:s:%s\nauthentication level:i:0\nclear password:s:%s\ndisable wallpaper:i:0\ndisable full window drag:i:0\ndisable menu anims:i:0\ndisable themes:i:0\nalternate shell:s:\nshell working directory:s:\nauthentication level:i:2\nconnect to console:i:0\ngatewayusagemethod:i:0\ndisable cursor setting:i:0\nallow font smoothing:i:1\nallow desktop composition:i:1\nredirectprinters:i:0\nprompt for credentials on client:i:1\nuse redirection server name:i:0"
     # server: 192.168.1.66 # Default is 'honeypot addr'
 
   txtemail:
     user: dave
     pass: 12345
+    # template: "From: Adel 0x <adel@example.com>\nSubject: Re: Monitoring system\nDate: March 22, 2017 at 21:59:15 GMT+11\nTo: Dave Cohen <dave.cohen@example.com>\nCc: security <security@example.com>\n\nHi,\n\nAh, sorry I forgot to send you the new address: http://%s\nI also reset your password (user: %s) to the default pass: %s\n\nPlease set the MFA (multi-factor authentication) ASAP.\n\nCheers,\nAdel\n\nOn 22 Mar 2017, at 9:57 pm, Dave Cohen <dave.cohen@example.com> wrote:\n\nHi Adel,\n\nI just wanted to login to the Monitoring system, but I get 404 error. Could you please have a look at it?\n\nThanks\nDave\n\nThe information contained in this email and any attachments is confidential and/or privileged. This email and any attachments are intended to be read only by the person named above. If the reader of this email, and any attachments, is not the intended recipient, you are hereby notified that any review, dissemination or copying of this email and any attachments is prohibited. If you have received this email and any attachments in error, please notify the sender by email or telephone and delete it from your email client."
     # server: 192.168.1.66 # Default is 'honeypot addr'
     
+
 honeybits:
 
   # Fake records in config files
