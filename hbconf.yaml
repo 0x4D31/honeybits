@@ -19,8 +19,8 @@ honeyfile:
   goaudit-conf: /etc/go-audit.yaml # Only if you use go-audit
   traps:
     # Format: - file_path:content_type:template
-    # content_type: rdpconn, savedemail, 
-    # template: config (read from config file: contentgen.xxx.template), template file path (/tmp/sampletemplate.txt)
+    ##  content_type: rdpconn, txtemail, 
+    ##  template: config (read from config file: contentgen.xxx.template), template file path (/tmp/sampletemplate.txt)
     - /tmp/test.rdp:rdpconn:config
     - /tmp/email.txt:txtemail:template/txtemail
 
@@ -106,7 +106,7 @@ honeybits:
     enabled: false
     profile: devops
     region: us-east-2
-    command: ec2 describe-instance
+    command: ec2 describe-instances
     accesskeyid: AKIAIOSFODNN7EXAMPLE
     secretaccesskey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
