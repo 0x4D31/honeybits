@@ -18,6 +18,7 @@ This is a small but crusial component of your deception system which should also
 
 ### Current features:
 * Creating honeyfiles and monitoring the access to these traps using go-audit or auditd 
+* Template based content generator for honeyfiles
 * Insert different honeybits into "bash_history", including the following sample commands:
   + ssh
 ```(sshpass -p '123456' ssh -p 2222 root@192.168.1.66)```
