@@ -1,9 +1,13 @@
 # honeybits
-A simple tool to create and place breadcrumbs, honeytoken/traps or as I call it "honeybits", to lead the attackers to your decoys/honeypots! #cyber_deception #honeytoken
+A simple tool to create breadcrumbs and honeytokens, to lead the attackers to your honeypots!
+The Windows version of this project: [honeybits-win](https://github.com/0x4D31/honeybits-win)
+_Author: Adel "0x4D31" Karimi._
+
+## Background
 
 The problem with the traditional implementation of honeypots in production environments is that the bad guys can ONLY discover the honeypots by network scanning which is noisy! The only exception I can think of is [Beeswarm](https://github.com/honeynet/beeswarm) (it intentionally leaks credentials in the network traffic and then looks for the unexpected reuse of these honey credentials).
 
-If you take a look at the [Mitre ATT&CK Matrix](https://attack.mitre.org/wiki/Main_Page), you will see that 'Network Service Scanning' is only one of the many different Post-breach activities of attackers. The more you plant false or misleading information in response to the post-compromise techniques (specially the techniques under ‘credential access’, ‘Discovery’, and ‘Lateral movement’ tactics in ATT&CK matrix), the greater the chance of catching the attackers. "Honeybits" helps you automate the creation of breadcrumbs/honeytokens on your production Servers and Workstations. These honeytokens or breadcrumbs can include:
+If you take a look at the [Mitre ATT&CK Matrix](https://attack.mitre.org/wiki/Main_Page), you will see that 'Network Service Scanning' is only one of the many different Post-breach activities of attackers. **The more you plant false or misleading information in response to the post-compromise techniques** (specially the techniques under ‘credential access’, ‘Discovery’, and ‘Lateral movement’ tactics in ATT&CK matrix), **the greater the chance of catching the attackers**. "Honeybits" helps you automate the creation of breadcrumbs/honeytokens on your production Servers and Workstations. These honeytokens or breadcrumbs include:
 * Fake bash_history commands (such as ssh, ftp, rsync, scp, mysql, wget, awscli)
 * Fake AWS credentials and config files (you required to create fake AWS IAM users with no permissions and generate access keys for them)
 * Configuration, backup and connection files such as RDP and VPN
@@ -16,9 +20,12 @@ This is a small but crusial component of your deception system which should also
 
 ![Honeybits](https://github.com/0x4D31/honeybits/blob/master/docs/honeybits.png)
 
-### Current features:
+## Features
 * Creating honeyfiles and monitoring the access to these traps using go-audit or auditd 
 * Template based content generator for honeyfiles
+* Insert honeybits into AWS config and credentials file
+* Insert honeybits into /etc/hosts
+* Reading config from a Remote Key/Value Store such as Consul or etcd
 * Insert different honeybits into "bash_history", including the following sample commands:
   + ssh
 ```(sshpass -p '123456' ssh -p 2222 root@192.168.1.66)```
@@ -40,11 +47,16 @@ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 aws ec2 describe-instances --profile devops --region us-east-2
 ```
-* Insert honeybits into AWS config and credentials file
-* Insert honeybits into /etc/hosts
-* Reading config from a Remote Key/Value Store such as Consul or etcd
 
-### Test:
+## Requirements
+* [Go 1.7+](https://golang.org/dl/)
+* Viper
+```go get github.com/spf13/viper```
+* crypt
+```go get github.com/xordataexchange/crypt/config```
+* [go-audit](https://github.com/slackhq/go-audit) or auditd (if you want to monitor the honeyfiles)
+
+## Usage:
 ```
 $ go build
 $ sudo ./honeybits 
@@ -69,15 +81,17 @@ Local config file loaded.
 [done] custom honeybit is inserted
 ```
 
-### TODO:
-* Content generator for honeyfiles and file honeybits
-  + note: honeyfiles are fake monitored files with random content (doesn't matter), but file honeybits are like connection, config, or backup files that may contain credentials and point the attackers to our honeypots/decoys
-* Add more Credential Traps
-  + Configuration, connection and backup files (file honeybit)
-* Add more Network Traps
-  + Monitoring some network traps using go-audit
-* Add Application Traps
-* Add Windows support (current version supports Linux and Mac OS X)
-  + New traps including CMD/PowerShell commands history, Browser history, Saved passwords, Registry keys, Credentials, Connection and configuration files such as .rdp and etc.
+## TODO:
+* Improve the Content generator
+* More traps, including:
+  + Beacon documents
+  + KeePass file with entries (.kdbx)
+  + Database files/backups: SQLite, MySQL
+  + Fake security scan results such as Nmap output
+  + Binary files with hardcoded IP / credentials
+* More network traps
+  + Fake PCAP / network traffic containing credentials and etc.
+  + Fake ARP Table entries
+  + Monitoring network traps using go-audit
+* Complete the Windows version ((honeybits-win)[https://github.com/0x4D31/honeybits-win])
 * Documentation
-
