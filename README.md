@@ -93,5 +93,5 @@ Local config file loaded.
   + Fake PCAP / network traffic containing credentials and etc.
   + Fake ARP Table entries
   + Monitoring network traps using go-audit
-* Complete the Windows version - (honeybits-win)[https://github.com/0x4D31/honeybits-win]
+* Complete the Windows version - [honeybits-win](https://github.com/0x4D31/honeybits-win)
 * Documentation
