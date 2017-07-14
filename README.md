@@ -1,5 +1,5 @@
 # Honeybits
-A simple tool to create breadcrumbs and honeytokens, to lead the attackers to your honeypots!
+A simple tool designed to enhance the effectiveness of your traps by spreading breadcrumbs & honeytokens across your production servers and workstations to lure the attacker toward your honeypots.
 
 _Author: Adel "0x4D31" Karimi._
 
