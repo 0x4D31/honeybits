@@ -80,16 +80,17 @@ Local config file loaded.
 ```
 
 ## TODO:
-* Improve the Content generator
-* More traps, including:
-  + Beacon documents
-  + KeePass file with entries (.kdbx)
-  + Database files/backups: SQLite, MySQL
-  + Fake security scan results such as Nmap output
-  + Binary files with hardcoded IP / credentials
-* More network traps
-  + Fake PCAP / network traffic containing credentials and etc.
-  + Fake ARP Table entries
-  + Monitoring network traps using go-audit
-* Complete the Windows version (honeybits-win)
-* Documentation
+- [ ] Rewrite the whole code. Current code is crap (just a PoC)!
+- [ ] Improve the Content generator
+- [ ] More traps, including:
+  - [ ] Beacon documents
+  - [ ] KeePass file with entries (.kdbx)
+  - [ ] Database files/backups: SQLite, MySQL
+  - [ ] Fake security scan results such as Nmap output
+  - [ ] Binary files with hardcoded IP / credentials
+- [ ] More network traps
+  - [ ] Fake PCAP / network traffic containing credentials and etc.
+  - [ ] Fake ARP Table entries
+  - [ ] Monitoring network traps using go-audit
+- [ ] Complete the Windows version (honeybits-win)
+- [ ] Documentation
