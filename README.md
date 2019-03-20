@@ -3,11 +3,13 @@ A simple PoC tool designed to enhance the effectiveness of your traps by spreadi
 
 _Author: Adel "0x4D31" Karimi._
 
+The Windows version of this project: [honeybits-win](https://github.com/0x4D31/honeybits-win)
+
 ## Background
 
-The problem with the traditional implementation of honeypots in production environments is that the bad guys can ONLY discover the honeypots by network scanning which is noisy! The only exception I can think of is [Beeswarm](https://github.com/honeynet/beeswarm) (it intentionally leaks credentials in the network traffic and then looks for the unexpected reuse of these honey credentials).
+Although honeypots are used by security researchers to study the attackers’ tools, techniques and motives for many years, they still have not been widely accepted and deployed in production environments. One reason is that the traditional implementation of honeypots is static and success is based on an attacker discovering it (which usually requires network scanning)!
 
-If you take a look at the [Mitre ATT&CK Matrix](https://attack.mitre.org/wiki/Main_Page), you will see that 'Network Service Scanning' is only one of the many different Post-breach activities of attackers. **The more you plant false or misleading information in response to the post-compromise techniques** (specially the techniques under ‘credential access’, ‘Discovery’, and ‘Lateral movement’ tactics in ATT&CK matrix), **the greater the chance of catching the attackers**. _Honeybits_ helps you automate the creation of breadcrumbs/honeytokens on your production Servers and Workstations. These honeytokens or breadcrumbs include:
+Taking a look at the [Mitre ATT&CK Matrix](https://attack.mitre.org/wiki/Main_Page), you will see that 'Network Service Scanning' is only one of the many different Post-compromise activities. **The more you plant false or misleading information in response to the post-compromise techniques** (specially the techniques under ‘credential access’, ‘Discovery’, and ‘Lateral movement’ tactics in ATT&CK matrix), **the greater the chance of catching the attackers**. _Honeybits_ helps you automate the creation of breadcrumbs/honeytokens on your production Servers and Workstations. These honeytokens or breadcrumbs include:
 * Fake bash_history commands (such as ssh, ftp, rsync, scp, mysql, wget, awscli)
 * Fake AWS credentials and config files (you required to create fake AWS IAM users with no permissions and generate access keys for them)
 * Configuration, backup and connection files such as RDP and VPN
