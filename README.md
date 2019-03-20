@@ -1,5 +1,5 @@
 # Honeybits
-A simple tool designed to enhance the effectiveness of your traps by spreading breadcrumbs & honeytokens across your production servers and workstations to lure the attacker toward your honeypots.
+A simple PoC tool designed to enhance the effectiveness of your traps by spreading breadcrumbs & honeytokens across your production servers and workstations to lure the attacker toward your honeypots.
 
 _Author: Adel "0x4D31" Karimi._
 
@@ -15,8 +15,6 @@ If you take a look at the [Mitre ATT&CK Matrix](https://attack.mitre.org/wiki/Ma
 * Fake browser history, bookmarks and saved passwords
 * Injected fake credentials into LSASS
 * Fake registry keys
-
-This is a small but crusial component of your deception system which should also include honeypots (ideally high-interaction ones), Log collection and analysis system, alerting, and so on. 
 
 ![Honeybits](https://github.com/0x4D31/honeybits/blob/master/docs/honeybits.png)
 
